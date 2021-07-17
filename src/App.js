@@ -4,13 +4,13 @@ import {UppercaseLetters, LowercaseLetters, Symbols, Numbers} from './Components
 
 function App() {
 
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('Password');
   const [strength, setStrength] = useState(20);
   const [includeUp, setIncludeUp] = useState(false);
   const [includeLow, setIncludeLow] = useState(false);
   const [includeNum, setIncludeNum] = useState(false);
   const [includeSym, setIncludeSym] = useState(false);
-
+  const [alert, setAlert] = useState('');
   const handlePassword = (e) => {
       let characterList = '';
 
@@ -45,16 +45,25 @@ function App() {
     return password;
   }
 
+  const handleCopy = (e) => {
+    navigator.clipboard.writeText(password);
+    if(password.length > 0){
+      setAlert('Password copied successfully');
+    }
+    else{
+      setAlert('Please Generate Password');
+    }
+  } 
   return (
     <div className="App">
       <div className="container">
         <div className="generator">
-          <h2 className="generator_header">
+          <h1 className="generator_header">
             Password Generator
-          </h2>
+          </h1>
           <div className="generator_password">
             <h3>{password}</h3>
-            <button className="copy_button">
+            <button onClick={handleCopy} className="copy_button">
               <i className="far fa-clipboard"></i>
             </button>
           </div>
@@ -119,7 +128,7 @@ function App() {
               <i className="fas fa-cogs"></i>
               Generate Password
             </button>
-          </div>
+          </div> <p className='alert_Message'>{alert}</p>
         </div>
       </div>
     </div>
